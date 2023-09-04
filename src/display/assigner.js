@@ -1,2 +1,0 @@
-// import { elementGenerator } from "./generator"
-

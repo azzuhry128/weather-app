@@ -2,7 +2,7 @@
 
 const geocode_key = "fa62a164b6f543dc8e9c0dfca71eee4a"
 
-export async function getLocation() {
+export async function geoLocator() {
   if (navigator.geolocation) {
     console.log("gettings user's geocode...")
     const geocode = new Promise((resolve, reject) => {

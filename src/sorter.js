@@ -11,18 +11,20 @@ export async function sorter(data) {
   const forecast = await forecastSorter(data)
 
   const weatherObject = {country, region, city, weather, humidity, wind, temperature, forecast}
-  console.log("weather data sorting finished...")
+  console.log("data sorting finished...")
   return weatherObject
 }
 
 async function forecastSorter(data) {
   console.log("sorting forecast data...")
   const forecastArray = []
-  console.log("sorting forecast info...")
-  const array = Object.entries(data)
+  const result = []
+  const array = Object.entries(data.forecast.forecastday)
+  const chunkSize = 24
+
   array.forEach(element => {
     // console.log(element[1])
-    for (let data of element[1]) {
+    for (let data of element[1].hour) {
       const weather = data.condition.text
       const temp = data.temp_c
       const timeanddate = data.time
@@ -33,7 +35,11 @@ async function forecastSorter(data) {
       forecastArray.push(object)
     }
   });
-  console.log("sorting finished...")
-  console.log("forecast data sorting finished...")
-  return forecastArray
-}
+
+  for (let i = 0; i < forecastArray.length; i += chunkSize) {
+    const chunk = forecastArray.slice(i, i + chunkSize).map(obj => JSON.parse(JSON.stringify(obj)));
+    result.push(chunk);
+  }
+
+  return result
+} 
