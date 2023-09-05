@@ -18,7 +18,7 @@ export async function main() {
     const requestUrl = `http://api.weatherapi.com/v1/${forecast}.json?key=${apikey}&q=${await geocode}&days=3&aqi=no&alerts=no`
     const data = await fetchData(await requestUrl)
     const sortedData = await sorter(await data)
-    render(sortedData, "1")
+    render(sortedData, "")
     console.log("factory closed...")
     return 
   } catch (error) {

@@ -5,7 +5,6 @@ export async function fetchData(forecastUrl) {
     .then(console.log("fetching weather data..."))
     .then(response => response.json())
     .finally(console.log("fetching finished..."))
-  console.log(response)
   return response
 }
 

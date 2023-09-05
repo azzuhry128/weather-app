@@ -40,26 +40,22 @@ async function getCurrentElements() {
 async function getDaysElements() {
   const first = document.getElementById("dayOne")
   const second = document.getElementById("dayTwo")
-  const third = document.getElementById("dayThird")
+  const third = document.getElementById("dayThree")
 
   const daysElements = {first, second, third}
   return daysElements
 }
 
-async function daysRenderer(data, elements, order) {
-  if(order == "1" || !order) {
-    console.log("rendering 1st day forecast...")
-    const forecast = data.forecast.dayOne
-    elements.forecast.append(forecast)
-  } else if(order == "2") {
-    console.log("rendering 2nd day forecast...")
-    const forecast = data.forecast.dayTwo
-    elements.forecast.append(forecast)
-  } else {
-    console.log("rendering 3rd day forecast...")
-    const forecast = data.forecast.dayThree
-    elements.forecast.append(forecast)
-  }
+async function daysRenderer(data, elements) {
+  console.log(data.days)
+
+  const firstDay = data.days[0]
+  const secondDay = data.days[1]
+  const thirdDay = data.days[2]
+
+  elements.first.append(firstDay)
+  elements.second.append(secondDay)
+  elements.third.append(thirdDay)
 }
 
 async function currentInfoRenderer(data, elements) {
@@ -77,7 +73,7 @@ async function currentInfoRenderer(data, elements) {
 }
 
 async function switcher(data, order) {
-  if(order == "1" || null || '') {
+  if(order === "1" || order === null || order === '' || order === "") {
     return data.forecast[0]
   } else if(order == "2") {
     return data.forecast[1]

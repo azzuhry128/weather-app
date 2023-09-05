@@ -1,5 +1,7 @@
+
 export async function sorter(data) {
   console.log("sorting weather data...")
+
   const country = data.location.country
   const region = data.location.region
   const city = data.location.name
@@ -8,9 +10,21 @@ export async function sorter(data) {
   const wind = data.current.wind_kph
   const temperature = data.current.temp_c
 
+  const days = []
+
+  for (let index = 0; index < data.forecast.forecastday.length; index++) {
+    const date = data.forecast.forecastday[index].date;
+    const timestamp = Date.parse(date)
+    const day = new Date(timestamp)
+
+    const dayOfWeek = day.toLocaleDateString('en-us', {weekday: "long"})
+    days.push(dayOfWeek)
+  }
+
   const forecast = await forecastSorter(data)
 
-  const weatherObject = {country, region, city, weather, humidity, wind, temperature, forecast}
+  const weatherObject = {country, region, city, weather, humidity, wind, temperature, forecast, days}
+  console.log(weatherObject)
   console.log("data sorting finished...")
   return weatherObject
 }
