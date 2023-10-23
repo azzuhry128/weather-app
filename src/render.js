@@ -1,18 +1,26 @@
-export async function render(data, order) {
-  console.log("rendering data...")
-  const forecastWrapper = document.getElementById("forecast-container")
 
-  const switchedData = await switcher(data, order)
+
+export async function render(data, event) {
+  console.log("rendering data...")
 
   currentInfoRenderer(data, await getCurrentElements())
   daysRenderer(data, await getDaysElements())
+  forecastRenderer(data, event)
 
-  switchedData.forEach((object) => {
+  console.log("render finished...")
+}
+
+export async function forecastRenderer(data, event) {
+  const switched = await(switcher(data, event))
+  const forecastWrapper = document.getElementById("forecast-container")
+
+  switched.forEach((object) => {
   const wrapper = document.createElement("div")
   const clock = document.createElement("h1")
   // const weatherIcon = document.createElement("img")
   const temp = document.createElement("h1")
 
+  wrapper.setAttribute('id', 'forecast-data')
   wrapper.classList.add("p-2", "gap-x-2" ,"text-center")
 
     clock.textContent = object.hour
@@ -24,7 +32,7 @@ export async function render(data, order) {
     forecastWrapper.appendChild(wrapper)
     // console.log(wrapper)
   })
-  console.log("render finished...")
+
 }
 
 async function getCurrentElements() {
@@ -63,8 +71,6 @@ async function currentInfoRenderer(data, elements) {
   const city = data.city
   const weather = data.weather
   const temp = data.temperature
-  // const wind = data.wind
-
   
   elements.region.append(region)
   elements.city.append(city)
@@ -72,15 +78,18 @@ async function currentInfoRenderer(data, elements) {
   elements.temp.append(temp + '℃')
 }
 
-async function switcher(data, order) {
-  if(order === "1" || order === null || order === '' || order === "") {
+async function switcher(data, event) {
+  if(event == "render-first") {
+    console.log("returning forecast[0]")
     return data.forecast[0]
-  } else if(order == "2") {
+  } else if(event == "render-second") {
+    console.log("returning forecast[1]")
     return data.forecast[1]
-  } else if(order == "3") {
+  } else if(event == "render-third") {
+    console.log("returning forecast[2]")
     return data.forecast[2]
   } else {
-    console.log("wrong input please")
+    console.log("wrong input")
   }
 }
 

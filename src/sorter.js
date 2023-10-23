@@ -24,7 +24,6 @@ export async function sorter(data) {
   const forecast = await forecastSorter(data)
 
   const weatherObject = {country, region, city, weather, humidity, wind, temperature, forecast, days}
-  console.log(weatherObject)
   console.log("data sorting finished...")
   return weatherObject
 }

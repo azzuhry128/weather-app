@@ -5,9 +5,38 @@ window.onload = () => {
     if(localStorage.getItem("geolocation") != '' && localStorage.getItem("weather")) {
     console.log("data exist...")
     main()
+    daysButtonTrigger()
   } else {
     console.log("data not exist...")
   }
+}
+
+
+function daysButtonTrigger() {
+  const renderFirst = new Event("render-first")
+  const renderSecond = new Event("render-second")
+  const renderThird = new Event("render-third")
+
+  const first = document.getElementById("dayOne")
+  const second = document.getElementById("dayTwo")
+  const third = document.getElementById("dayThree")
+
+  first.addEventListener("click", () => {
+    console.log("first day button pressed...")
+    first.dispatchEvent(renderFirst)
+  })
+
+  second.addEventListener("click", () => {
+    console.log("second day button pressed...")
+    second.dispatchEvent(renderSecond)
+
+  })
+
+  third.addEventListener("click", () => {
+    console.log("third day button pressed...")
+    third.dispatchEvent(renderThird)
+  })
+
 }
 
 //just kidding its should be here 
